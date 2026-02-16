@@ -15,8 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from materials.views import api_root
 
 urlpatterns = [
+    path('', api_root, name='root'),
     path('admin/', admin.site.urls),
+    path('api/', include('materials.urls')),  # Все API начинаются с /api/
 ]
+
+# Для работы с медиафайлами в режиме разработки
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
