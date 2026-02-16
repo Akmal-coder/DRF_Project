@@ -206,3 +206,6 @@ __marimo__/
 
 reports/
 test_report.json
+
+# Environment variables
+.env
