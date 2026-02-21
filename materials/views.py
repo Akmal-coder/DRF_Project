@@ -1,8 +1,8 @@
 from rest_framework import viewsets, generics
+from django.http import JsonResponse  # Добавь этот импорт
 from materials.models import Course, Lesson
 from materials.serializers import CourseSerializer, LessonSerializer
-from django.http import JsonResponse
-from django.shortcuts import redirect
+
 
 def api_root(request):
     """Корневая страница API"""
