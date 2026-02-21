@@ -13,10 +13,11 @@ class LessonSerializer(serializers.ModelSerializer):
 class CourseSerializer(serializers.ModelSerializer):
     """Сериализатор для курса"""
 
-    # Вложенный сериализатор для отображения уроков курса
     lessons = LessonSerializer(many=True, read_only=True)
-    # Количество уроков в курсе
-    lessons_count = serializers.IntegerField(source='lessons.count', read_only=True)
+    lessons_count = serializers.IntegerField(
+        source='lessons.count',
+        read_only=True
+    )
 
     class Meta:
         model = Course
