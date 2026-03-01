@@ -8,23 +8,19 @@ class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields = '__all__'
+        read_only_fields = ('owner',)  # owner заполняется автоматически
 
 
 class CourseSerializer(serializers.ModelSerializer):
     """Сериализатор для курса"""
 
     lessons = LessonSerializer(many=True, read_only=True)
-    lessons_count = serializers.SerializerMethodField(
-        read_only=True
-    )
+    lessons_count = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Course
         fields = '__all__'
+        read_only_fields = ('owner',)  # owner заполняется автоматически
 
     def get_lessons_count(self, obj):
-        """
-        Возвращает количество уроков в курсе
-        obj - это экземпляр модели Course
-        """
         return obj.lessons.count()
