@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User  # Добавьте импорт
 
 
 class Course(models.Model):
@@ -18,6 +19,14 @@ class Course(models.Model):
         verbose_name='Описание',
         blank=True,
         null=True
+    )
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='courses',
+        verbose_name='Владелец'
     )
 
     class Meta:
@@ -56,6 +65,14 @@ class Lesson(models.Model):
         on_delete=models.CASCADE,
         related_name='lessons',
         verbose_name='Курс'
+    )
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='lessons',
+        verbose_name='Владелец'
     )
 
     class Meta:
