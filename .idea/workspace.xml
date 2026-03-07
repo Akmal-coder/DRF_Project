@@ -4,15 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a23232a0-367f-48ae-9541-e0c181d9b79f" name="Changes" comment="homework_30.2 done">
-      <change afterPath="$PROJECT_DIR$/users/management/commands/create_groups.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/users/permissions.py" afterDir="false" />
+    <list default="true" id="a23232a0-367f-48ae-9541-e0c181d9b79f" name="Changes" comment="homework_31 done">
+      <change afterPath="$PROJECT_DIR$/materials/paginators.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/materials/validators.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/materials/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/materials/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/materials/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/materials/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/materials/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/materials/tests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/materials/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/materials/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/poetry.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
@@ -32,7 +34,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="develop" />
+        <entry key="$PROJECT_DIR$" value="feature/homework_31" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -62,7 +64,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "feature/homework__31"
+    "git-widget-placeholder": "develop"
   }
 }]]></component>
   <component name="SharedIndexes">
@@ -96,7 +98,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771687892121</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="homework_31 done">
+      <option name="closed" value="true" />
+      <created>1772358908478</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1772358908478</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -113,6 +123,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="homework 30.1 done" />
     <MESSAGE value="homework_30.2 done" />
-    <option name="LAST_COMMIT_MESSAGE" value="homework_30.2 done" />
+    <MESSAGE value="homework_31 done" />
+    <option name="LAST_COMMIT_MESSAGE" value="homework_31 done" />
   </component>
 </project>
