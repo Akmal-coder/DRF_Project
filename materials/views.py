@@ -1,8 +1,11 @@
 from rest_framework import viewsets, generics, permissions
+from rest_framework.response import Response
 from django.http import JsonResponse
+from django_filters.rest_framework import DjangoFilterBackend
 from materials.models import Course, Lesson
 from materials.serializers import CourseSerializer, LessonSerializer
-from users.permissions import IsModerator, IsOwner
+from users.permissions import IsModerator, IsOwner, IsOwnerOrStaff
+from materials.paginators import MaterialsPagination
 
 
 def api_root(request):
@@ -22,6 +25,7 @@ class CourseViewSet(viewsets.ModelViewSet):
     """ViewSet для курса с разграничением прав"""
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    pagination_class = MaterialsPagination  # Добавляем пагинацию
 
     def get_queryset(self):
         """Фильтруем queryset в зависимости от прав пользователя"""
@@ -65,22 +69,23 @@ class CourseViewSet(viewsets.ModelViewSet):
 class LessonListCreateView(generics.ListCreateAPIView):
     """Generic view для получения списка уроков и создания нового"""
     serializer_class = LessonSerializer
+    pagination_class = MaterialsPagination  # Добавляем пагинацию
 
     def get_queryset(self):
         """Фильтруем queryset в зависимости от прав пользователя"""
         user = self.request.user
 
-        # Модераторы и админы видят все уроки
+
         if user.groups.filter(name='Модераторы').exists() or user.is_staff:
             return Lesson.objects.all()
 
-        # Обычные пользователи видят только свои уроки
+
         return Lesson.objects.filter(owner=user)
 
     def get_permissions(self):
         """Разные права для разных методов"""
         if self.request.method == 'GET':
-            # Просмотр списка - всем авторизованным
+
             self.permission_classes = [permissions.IsAuthenticated]
         elif self.request.method == 'POST':
             # Создание урока - только не модераторы

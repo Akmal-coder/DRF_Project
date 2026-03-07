@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from users.models import Payment
-from users.models import Payment, User
+from users.models import Payment, User, Subscription
 from materials.models import Course, Lesson
+
 
 
 class PaymentSerializer(serializers.ModelSerializer):
@@ -46,3 +46,12 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         password = validated_data.pop('password')
         user = User.objects.create_user(**validated_data, password=password)
         return user
+
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+    """Сериализатор для подписки"""
+
+    class Meta:
+        model = Subscription
+        fields = ('id', 'user', 'course', 'created_at')
+        read_only_fields = ('id', 'created_at')

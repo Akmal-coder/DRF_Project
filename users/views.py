@@ -1,8 +1,10 @@
 from rest_framework import generics, filters, status, permissions
 from rest_framework.response import Response
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework.views import APIView
 from django_filters.rest_framework import DjangoFilterBackend
-from users.models import Payment, User
+from django.shortcuts import get_object_or_404
+from users.models import Payment, User, Subscription
+from materials.models import Course
 from users.serializers import PaymentSerializer, UserSerializer, UserRegistrationSerializer
 
 
@@ -88,3 +90,44 @@ class UserRegistrationAPIView(generics.CreateAPIView):
                 status=status.HTTP_201_CREATED
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SubscriptionAPIView(APIView):
+    """APIView для управления подпиской на курс"""
+
+    def post(self, request):
+        # Получаем пользователя из запроса
+        user = request.user
+
+        # Проверяем, что пользователь авторизован
+        if not user.is_authenticated:
+            return Response(
+                {"error": "Необходимо авторизоваться"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
+        # Получаем id курса из данных запроса
+        course_id = request.data.get('course_id')
+        if not course_id:
+            return Response(
+                {"error": "Не указан ID курса"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Получаем объект курса
+        course = get_object_or_404(Course, id=course_id)
+
+        # Получаем подписку пользователя на этот курс
+        subscription = Subscription.objects.filter(user=user, course=course)
+
+        # Если подписка есть - удаляем, если нет - создаем
+        if subscription.exists():
+            subscription.delete()
+            message = 'Подписка удалена'
+            status_code = status.HTTP_200_OK
+        else:
+            Subscription.objects.create(user=user, course=course)
+            message = 'Подписка добавлена'
+            status_code = status.HTTP_201_CREATED
+
+        return Response({"message": message}, status=status_code)

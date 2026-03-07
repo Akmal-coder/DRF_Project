@@ -7,6 +7,7 @@ from users.views import (
     UserUpdateAPIView,
     UserDeleteAPIView,
     UserRegistrationAPIView,
+    SubscriptionAPIView,
 )
 
 urlpatterns = [
@@ -25,4 +26,5 @@ urlpatterns = [
 
     # Платежи (требуют авторизации)
     path('payments/', PaymentListAPIView.as_view(), name='payment-list'),
+    path('subscription/', SubscriptionAPIView.as_view(), name='subscription'),
 ]
