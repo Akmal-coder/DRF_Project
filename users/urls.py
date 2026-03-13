@@ -2,6 +2,9 @@ from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from users.views import (
     PaymentListAPIView,
+    PaymentCreateAPIView,
+    PaymentSuccessView,
+    PaymentCancelView,
     UserListAPIView,
     UserDetailAPIView,
     UserUpdateAPIView,
@@ -26,5 +29,9 @@ urlpatterns = [
 
     # Платежи (требуют авторизации)
     path('payments/', PaymentListAPIView.as_view(), name='payment-list'),
+    path('payments/', PaymentListAPIView.as_view(), name='payment-list'),
+    path('payments/create/', PaymentCreateAPIView.as_view(), name='payment-create'),
+    path('payments/success/', PaymentSuccessView.as_view(), name='payment-success'),
+    path('payments/cancel/', PaymentCancelView.as_view(), name='payment-cancel'),
     path('subscription/', SubscriptionAPIView.as_view(), name='subscription'),
 ]
