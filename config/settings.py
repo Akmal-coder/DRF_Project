@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django_filters',
     'users',
     'materials',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -150,9 +151,20 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'LMS Project API',
+    'DESCRIPTION': 'Документация для платформы управления обучением',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
+
+STRIPE_API_KEY = os.getenv('STRIPE_API_KEY')
