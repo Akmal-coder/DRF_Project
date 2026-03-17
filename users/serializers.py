@@ -55,3 +55,19 @@ class SubscriptionSerializer(serializers.ModelSerializer):
         model = Subscription
         fields = ('id', 'user', 'course', 'created_at')
         read_only_fields = ('id', 'created_at')
+
+
+class PaymentCreateSerializer(serializers.ModelSerializer):
+    """Сериализатор для создания платежа"""
+
+    class Meta:
+        model = Payment
+        fields = ('paid_course', 'paid_lesson')
+
+    def validate(self, data):
+        """Проверяем, что указан либо курс, либо урок"""
+        if not data.get('paid_course') and not data.get('paid_lesson'):
+            raise serializers.ValidationError("Укажите курс или урок для оплаты")
+        if data.get('paid_course') and data.get('paid_lesson'):
+            raise serializers.ValidationError("Укажите только один объект для оплаты")
+        return data
