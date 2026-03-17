@@ -6,6 +6,7 @@ from materials.models import Course, Lesson
 from materials.serializers import CourseSerializer, LessonSerializer
 from users.permissions import IsModerator, IsOwner, IsOwnerOrStaff
 from materials.paginators import MaterialsPagination
+from materials.tasks import send_course_update_email
 
 
 def api_root(request):
@@ -64,6 +65,13 @@ class CourseViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         """При создании курса назначаем владельца"""
         serializer.save(owner=self.request.user)
+
+    def perform_update(self, serializer):
+        """При обновлении курса отправляем уведомления подписчикам"""
+        course = serializer.save()
+
+        # Запускаем асинхронную задачу для отправки уведомлений
+        send_course_update_email.delay(course.id, course.title)
 
 
 class LessonListCreateView(generics.ListCreateAPIView):
