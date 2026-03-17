@@ -1,11 +1,22 @@
 from rest_framework import generics, filters, status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import serializers  # Добавлено для ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 from users.models import Payment, User, Subscription
 from materials.models import Course
-from users.serializers import PaymentSerializer, UserSerializer, UserRegistrationSerializer
+from users.serializers import PaymentSerializer, UserSerializer, UserRegistrationSerializer, PaymentCreateSerializer
+
+# Импорты для документации
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
+
+# Импорты для Stripe
+from users.services import (
+    create_stripe_product,
+    create_stripe_price,
+    create_stripe_checkout_session
+)
 
 
 class PaymentListAPIView(generics.ListAPIView):
@@ -24,6 +35,99 @@ class PaymentListAPIView(generics.ListAPIView):
     # Сортировка по дате
     ordering_fields = ['payment_date']
     ordering = ['-payment_date']
+
+
+class PaymentCreateAPIView(generics.CreateAPIView):
+    """Создание платежа через Stripe"""
+    queryset = Payment.objects.all()
+    serializer_class = PaymentCreateSerializer
+
+    def perform_create(self, serializer):
+        """Создает платеж и получает ссылку на оплату"""
+        user = self.request.user
+
+        # Получаем курс или урок для оплаты
+        course = serializer.validated_data.get('paid_course')
+        lesson = serializer.validated_data.get('paid_lesson')
+
+        # Определяем сумму и название
+        if course:
+            amount = 1000  # TODO: взять из модели курса
+            # Создаем продукт в Stripe
+            product_id = create_stripe_product(course.title, course.description or "")
+        else:
+            amount = 500  # TODO: взять из модели урока
+            # Создаем продукт в Stripe
+            product_id = create_stripe_product(lesson.title, lesson.description or "")
+
+        if not product_id:
+            raise serializers.ValidationError("Ошибка создания продукта в Stripe")
+
+        # Создаем цену в Stripe
+        price_id = create_stripe_price(amount, product_id)
+        if not price_id:
+            raise serializers.ValidationError("Ошибка создания цены в Stripe")
+
+        # Создаем сессию для оплаты
+        success_url = "http://localhost:8000/api/payments/success/"
+        cancel_url = "http://localhost:8000/api/payments/cancel/"
+
+        payment_url, session_id = create_stripe_checkout_session(
+            price_id, success_url, cancel_url
+        )
+
+        if not payment_url:
+            raise serializers.ValidationError("Ошибка создания сессии оплаты")
+
+        # Сохраняем платеж
+        payment = serializer.save(
+            user=user,
+            amount=amount,
+            payment_method='transfer',  # Stripe - это перевод
+            stripe_product_id=product_id,
+            stripe_price_id=price_id,
+            stripe_session_id=session_id,
+            stripe_payment_url=payment_url,
+            payment_status='pending'
+        )
+
+        # Добавляем ссылку на оплату в ответ
+        self.payment_url = payment_url
+        self.session_id = session_id
+
+    def create(self, request, *args, **kwargs):
+        """Переопределяем create для возврата ссылки на оплату"""
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+
+        headers = self.get_success_headers(serializer.data)
+        return Response(
+            {
+                'payment': serializer.data,
+                'payment_url': getattr(self, 'payment_url', None),
+                'session_id': getattr(self, 'session_id', None),
+                'message': 'Платеж создан, перейдите по ссылке для оплаты'
+            },
+            status=status.HTTP_201_CREATED,
+            headers=headers
+        )
+
+
+class PaymentSuccessView(APIView):
+    """View для успешной оплаты"""
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request):
+        return Response({"message": "Оплата прошла успешно!"})
+
+
+class PaymentCancelView(APIView):
+    """View для отмены оплаты"""
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request):
+        return Response({"message": "Оплата отменена"})
 
 
 class UserListAPIView(generics.ListAPIView):
@@ -92,6 +196,37 @@ class UserRegistrationAPIView(generics.CreateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@extend_schema(
+    request=OpenApiExample(
+        'Пример запроса',
+        value={'course_id': 1},
+        request_only=True
+    ),
+    responses={
+        201: OpenApiExample(
+            'Подписка добавлена',
+            value={'message': 'Подписка добавлена'},
+            response_only=True
+        ),
+        200: OpenApiExample(
+            'Подписка удалена',
+            value={'message': 'Подписка удалена'},
+            response_only=True
+        ),
+        401: OpenApiExample(
+            'Не авторизован',
+            value={'error': 'Необходимо авторизоваться'},
+            response_only=True
+        ),
+        400: OpenApiExample(
+            'Не указан ID курса',
+            value={'error': 'Не указан ID курса'},
+            response_only=True
+        ),
+    },
+    description='Управление подпиской на курс. Если подписка есть - удаляет, если нет - создает.',
+    summary='Подписка/отписка на курс'
+)
 class SubscriptionAPIView(APIView):
     """APIView для управления подпиской на курс"""
 
