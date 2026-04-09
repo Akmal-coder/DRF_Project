@@ -14,12 +14,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 from datetime import timedelta
 
-load_dotenv()
-
-from django.conf.global_settings import MEDIA_URL, MEDIA_ROOT
-
-
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 
 
