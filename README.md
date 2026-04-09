@@ -10,6 +10,7 @@
 - Redis
 - Celery
 - Docker
+- GitHub Actions
 
 ## Запуск через Docker Compose
 
@@ -23,7 +24,10 @@
    ```bash
    git clone <your-repo-url>
    cd DRF_Project
-Создайте файл .env на основе шаблона bash cp .env.example .env
+Создайте файл .env на основе шаблона
+
+bash
+cp .env.example .env
 (при необходимости отредактируйте настройки)
 
 Соберите и запустите контейнеры
@@ -51,6 +55,89 @@ docker-compose down
 Остановка с удалением данных
 bash
 docker-compose down -v
+
+### Настройка удаленного сервера
+Требования к серверу
+Ubuntu 22.04/24.04
+
+Python 3.13
+
+PostgreSQL
+
+Nginx
+
+Git
+
+Шаги настройки
+Подключитесь к серверу по SSH
+
+bash
+ssh user@your-server-ip
+Установите зависимости
+
+bash
+sudo apt update && sudo apt install -y python3-pip python3-venv nginx git postgresql supervisor
+Клонируйте репозиторий
+
+bash
+git clone https://github.com/Akmal-coder/DRF_Project.git project
+cd project
+Настройте виртуальное окружение и установите зависимости
+
+bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+Настройте PostgreSQL
+
+bash
+sudo -u postgres psql
+CREATE DATABASE drf_project;
+CREATE USER test1 WITH PASSWORD 'your_password';
+GRANT ALL PRIVILEGES ON DATABASE drf_project TO test1;
+\q
+Создайте файл .env
+
+bash
+cp .env.example .env
+# Отредактируйте настройки (DB_HOST=localhost, DEBUG=False и т.д.)
+Выполните миграции и соберите статику
+
+bash
+python manage.py migrate
+python manage.py collectstatic --noinput
+Настройте Gunicorn как systemd-сервис (см. файл gunicorn.service в репозитории)
+
+Настройте Nginx (см. конфигурацию drf_project в sites-available)
+
+Автоматический деплой (GitHub Actions)
+Как это работает
+При каждом push в ветку develop (или создании pull request):
+
+Автоматически запускаются тесты проекта
+
+При успешном прохождении тестов код обновляется на сервере
+
+Применяются миграции и собирается статика
+
+Перезапускаются Gunicorn и Nginx
+
+Необходимые секреты в GitHub
+В репозитории → Settings → Secrets and variables → Actions добавьте:
+
+Secret name	Значение
+SERVER_HOST	IP-адрес вашего сервера
+SERVER_USER	Имя пользователя на сервере
+SSH_PRIVATE_KEY	Приватный SSH-ключ (содержимое файла ~/.ssh/id_rsa)
+Запуск деплоя
+Сделайте push в ветку develop:
+
+bash
+git push origin develop
+Или создайте pull request в develop
+
+Перейдите во вкладку Actions репозитория GitHub для просмотра статуса
+
 API Endpoints
 Курсы (ViewSet)
 GET /api/courses/ - список курсов
