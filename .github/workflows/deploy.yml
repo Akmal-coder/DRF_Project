@@ -10,17 +10,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_USER: test_user
-          POSTGRES_PASSWORD: test_pass
-          POSTGRES_DB: test_db
-        ports:
-          - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -35,19 +24,13 @@ jobs:
         pip install poetry
         poetry install --no-root
 
-    - name: Wait for PostgreSQL
-      run: sleep 5
-
     - name: Run tests
       run: |
         poetry run python manage.py test
       env:
-        DEBUG: 'False'
+        DEBUG: 'True'
+        DB_ENGINE: django.db.backends.sqlite3
         DB_NAME: test_db
-        DB_USER: test_user
-        DB_PASSWORD: test_pass
-        DB_HOST: localhost
-        DB_PORT: 5432
 
   deploy:
     runs-on: ubuntu-latest

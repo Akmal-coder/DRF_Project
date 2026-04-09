@@ -13,6 +13,7 @@ import os.path
 from pathlib import Path
 from dotenv import load_dotenv
 from datetime import timedelta
+import sys
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.env'))
@@ -182,3 +183,11 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'noreply@example.com')
 
 SITE_URL = os.getenv('SITE_URL', 'http://localhost:8000')
+
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'test_db.sqlite3',
+        }
+    }
