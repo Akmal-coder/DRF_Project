@@ -24,6 +24,13 @@ jobs:
         pip install poetry
         poetry install --no-root
 
+    - name: Run migrations
+      run: |
+        poetry run python manage.py migrate
+      env:
+        GITHUB_ACTIONS: true
+        SECRET_KEY: 'test-secret-key-for-github-actions-12345'
+
     - name: Run tests
       run: |
         poetry run python manage.py test

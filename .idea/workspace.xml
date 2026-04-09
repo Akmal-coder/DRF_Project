@@ -172,7 +172,23 @@
       <option name="project" value="LOCAL" />
       <updated>1775737709440</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="homework35_2 done">
+      <option name="closed" value="true" />
+      <created>1775737995650</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1775737995650</updated>
+    </task>
+    <task id="LOCAL-00015" summary="homework35_2 done">
+      <option name="closed" value="true" />
+      <created>1775738128067</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1775738128067</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
