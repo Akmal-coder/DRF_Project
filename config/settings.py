@@ -184,7 +184,7 @@ DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'noreply@example.com')
 
 SITE_URL = os.getenv('SITE_URL', 'http://localhost:8000')
 
-if 'test' in sys.argv:
+if 'test' in sys.argv or 'PYTEST' in os.environ:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
