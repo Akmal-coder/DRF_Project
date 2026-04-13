@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a23232a0-367f-48ae-9541-e0c181d9b79f" name="Changes" comment="homework_33 done">
-      <change afterPath="$PROJECT_DIR$/Docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
+    <list default="true" id="a23232a0-367f-48ae-9541-e0c181d9b79f" name="Changes" comment="homework35_2 done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +52,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "feature/homework__34.2"
+    "git-widget-placeholder": "feature/homework35__2"
   }
 }]]></component>
   <component name="SharedIndexes">
@@ -122,7 +118,87 @@
       <option name="project" value="LOCAL" />
       <updated>1773759519726</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="homework_34.2 done">
+      <option name="closed" value="true" />
+      <created>1774433734417</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1774433734417</updated>
+    </task>
+    <task id="LOCAL-00008" summary="homework35_2 done">
+      <option name="closed" value="true" />
+      <created>1775735626868</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1775735626881</updated>
+    </task>
+    <task id="LOCAL-00009" summary="homework35_2 done">
+      <option name="closed" value="true" />
+      <created>1775736835790</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1775736835790</updated>
+    </task>
+    <task id="LOCAL-00010" summary="homework35_2 done">
+      <option name="closed" value="true" />
+      <created>1775737240926</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1775737240926</updated>
+    </task>
+    <task id="LOCAL-00011" summary="homework35_2 done">
+      <option name="closed" value="true" />
+      <created>1775737358080</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1775737358080</updated>
+    </task>
+    <task id="LOCAL-00012" summary="homework35_2 done">
+      <option name="closed" value="true" />
+      <created>1775737506367</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1775737506367</updated>
+    </task>
+    <task id="LOCAL-00013" summary="homework35_2 done">
+      <option name="closed" value="true" />
+      <created>1775737709440</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1775737709440</updated>
+    </task>
+    <task id="LOCAL-00014" summary="homework35_2 done">
+      <option name="closed" value="true" />
+      <created>1775737995650</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1775737995650</updated>
+    </task>
+    <task id="LOCAL-00015" summary="homework35_2 done">
+      <option name="closed" value="true" />
+      <created>1775738128067</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1775738128067</updated>
+    </task>
+    <task id="LOCAL-00016" summary="homework35_2 done">
+      <option name="closed" value="true" />
+      <created>1775738414205</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1775738414205</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -143,6 +219,8 @@
     <MESSAGE value="homework_32.1 done" />
     <MESSAGE value="homework_32.2 done" />
     <MESSAGE value="homework_33 done" />
-    <option name="LAST_COMMIT_MESSAGE" value="homework_33 done" />
+    <MESSAGE value="homework_34.2 done" />
+    <MESSAGE value="homework35_2 done" />
+    <option name="LAST_COMMIT_MESSAGE" value="homework35_2 done" />
   </component>
 </project>
